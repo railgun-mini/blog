@@ -1,0 +1,172 @@
+html {
+    /* border-box: width计算border+padding+content */
+    /* content-box: width计算border+padding+content */
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    /* 继承父 */
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+}
+
+/* 加载字体 */
+@font-face {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: normal;
+    src: local(""),
+        url("/fonts/nunito-v16-latin-regular.woff2") format("woff2");
+}
+
+:root {
+    color: var(--text-color);
+    font-size: var(--font-size-md);
+    /* font-weight: var(--weight-normal); */
+    background-color: var(--bg-color);
+}
+
+/* 全局变量 */
+:root {
+    /* 字体 */
+    /* 设置基准字号为10px 16*62.5% = 10px */
+    /* font-size: 62.5%; */
+    /* 通常 1rem = 16px，所以 1rem = 16px */
+    --font-size-base: 1rem;
+    /* 12px */
+    --font-size-xs: 0.75rem;
+    /* 14px */
+    --font-size-sm: 0.875rem;
+    /* 16px */
+    --font-size-md: 1rem;
+    /* 18px */
+    --font-size-lg: 1.125rem;
+    /* 20px */
+    --font-size-xl: 1.25rem;
+
+    /* 圆角 */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 999px;
+
+    /* 间距 */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 20px;
+    --space-xxl: 24px;
+
+    /* 动画 */
+    --transition-base: 0.3s ease;
+    --transition-fast: 0.2s ease;
+
+    /* box-shadow */
+    --box-shadow-base: 0px 2px 4px rgba(0, 0, 0, 0.2), 0px -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 默认浅色主题 */
+:root {
+    --bg-color: rgb(245, 245, 245);
+    --card-bg-color: rgb(255, 255, 255);
+    --text-color: rgb(30, 30, 30);
+    --text-hover-color: rgb(97, 95, 255)
+}
+
+/* 深色主题类名 */
+[data-theme="dark"] {
+    --bg-color: rgb(29, 30, 32);
+    --card-bg-color: rgb(46, 46, 51);
+    --text-color: rgb(218, 218, 219);
+    --text-hover-color: rgb(97, 95, 255)
+}
+
+/* 当根元素带有 data-theme="dark" 时，隐藏月亮显示太阳 */
+[data-theme="dark"] #moon-icon {
+    display: none;
+}
+
+[data-theme="dark"] #sun-icon {
+    display: block;
+}
+
+/* 默认（浅色）情况下，隐藏太阳显示月亮 */
+:root:not([data-theme="dark"]) #sun-icon {
+    display: none;
+}
+
+:root:not([data-theme="dark"]) #moon-icon {
+    display: block;
+}
+
+.shadow-soft {
+    /* 水平 垂直 模糊 扩散 颜色 */
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 基于16px */
+h1,
+.fs-h1 {
+    font-size: clamp(3rem, 2.7273rem + 1.0909vi, 3.6rem);
+}
+
+h2,
+.fs-h2 {
+    font-size: clamp(2.25rem, 2.0455rem + 0.8182vi, 2.7rem);
+}
+
+h3,
+.fs-h3 {
+    font-size: clamp(1.875rem, 1.7045rem + 0.6818vi, 2.25rem);
+}
+
+h4,
+.fs-h4 {
+    font-size: clamp(1.5rem, 1.3636rem + 0.5455vi, 1.8rem);
+}
+
+h5,
+.fs-h5 {
+    font-size: clamp(1.25rem, 1.1364rem + 0.4545vi, 1.5rem);
+}
+
+h6,
+.fs-h6 {
+    font-size: clamp(1.125rem, 1.0227rem + 0.4091vi, 1.35rem);
+}
+
+p,
+.fs-p {
+    font-size: clamp(0.8333rem, 0.7576rem + 0.303vi, 1rem);
+}
+
+
+a {
+    /* 继承父元素的文本颜色 */
+    color: inherit;
+    /* 通常也会顺便取消下划线 */
+    text-decoration: none;
+}
+
+button {
+    /* 去掉默认的背景 */
+    background: none;
+    /* 去掉默认的边框 */
+    border: none;
+    /* 去掉点击时的蓝色轮廓（可选，建议用自定义 focus 样式替代） */
+    outline: none;
+    /* 继承父元素的颜色 */
+    color: inherit;
+}

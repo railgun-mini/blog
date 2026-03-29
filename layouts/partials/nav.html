@@ -1,0 +1,191 @@
+<style>
+    .nav {
+        /* 核心属性 */
+        position: sticky;
+        /* 距离视口顶部 0 像素时固定 */
+        top: 0;
+        /* 确保它在内容上方 */
+        z-index: 1000;
+        background-color: var(--bg-color);
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        gap: 2em;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 3em;
+        padding-right: 3em;
+        border-radius: var(--radius-lg);
+    }
+
+    .nav .logo {
+        margin-right: auto;
+    }
+
+    .nav .switch:hover {
+        cursor: pointer;
+        color: var(--text-hover-color);
+    }
+
+    .nav .menu-items {
+        display: flex;
+        gap: 3rem;
+    }
+
+    .nav .menu-items a:hover {
+        color: var(--text-hover-color);
+    }
+
+    /* 默认隐藏移动端专属按钮 */
+    .nav .mobile-only {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+
+        /* 1. 隐藏主菜单内容 */
+        .nav .menu-items {
+            display: none;
+        }
+
+        /* 3. 显示移动端菜单图标 */
+        .nav .mobile-only {
+            display: flex;
+            transition: var(--transition-base);
+        }
+
+        /* 默认状态：显示菜单，隐藏关闭 */
+        .nav .icon-menu {
+            display: block;
+        }
+
+        .nav .icon-close {
+            display: none;
+        }
+
+        /* 激活状态（当菜单展开时） */
+        .nav .active .icon-menu {
+            display: none;
+        }
+
+        .nav .active .icon-close {
+            display: block;
+        }
+
+        .nav .mobile-only:hover {
+            cursor: pointer;
+            color: var(--text-hover-color);
+        }
+
+        .nav .active .menu-items {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            translate: -50% 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 100%;
+            background-color: var(--bg-color);
+        }
+    }
+</style>
+
+<header class="nav shadow-soft">
+    <div class="logo">
+        <a href="/" style="display: flex;gap: 0.4em;justify-content: center;align-items: center;">
+            <img src="/icons/avatar.png" width="48px" />
+            <h5>Railgun Blog</h5>
+        </a>
+    </div>
+    <div id="mobile-menu">
+        <div class="menu-items">
+            {{ range .Site.Menus.main }}
+            <a href="{{ .URL }}">
+                <p>
+                    {{ .Name }}
+                </p>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+    <button id="theme-toggle" title="切换主题" class="switch">
+        <svg id="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 11.5373 21.3065 11.4608 21.0672 11.8568C19.9289 13.7406 17.8615 15 15.5 15C11.9101 15 9 12.0899 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z">
+            </path>
+        </svg>
+        <svg id="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+                d="M18 12C18 15.3137 15.3137 18 12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12Z">
+            </path>
+            </path>
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M12 1.25C12.4142 1.25 12.75 1.58579 12.75 2V3C12.75 3.41421 12.4142 3.75 12 3.75C11.5858 3.75 11.25 3.41421 11.25 3V2C11.25 1.58579 11.5858 1.25 12 1.25ZM4.39861 4.39861C4.6915 4.10572 5.16638 4.10572 5.45927 4.39861L5.85211 4.79145C6.145 5.08434 6.145 5.55921 5.85211 5.85211C5.55921 6.145 5.08434 6.145 4.79145 5.85211L4.39861 5.45927C4.10572 5.16638 4.10572 4.6915 4.39861 4.39861ZM19.6011 4.39887C19.894 4.69176 19.894 5.16664 19.6011 5.45953L19.2083 5.85237C18.9154 6.14526 18.4405 6.14526 18.1476 5.85237C17.8547 5.55947 17.8547 5.0846 18.1476 4.79171L18.5405 4.39887C18.8334 4.10598 19.3082 4.10598 19.6011 4.39887ZM1.25 12C1.25 11.5858 1.58579 11.25 2 11.25H3C3.41421 11.25 3.75 11.5858 3.75 12C3.75 12.4142 3.41421 12.75 3 12.75H2C1.58579 12.75 1.25 12.4142 1.25 12ZM20.25 12C20.25 11.5858 20.5858 11.25 21 11.25H22C22.4142 11.25 22.75 11.5858 22.75 12C22.75 12.4142 22.4142 12.75 22 12.75H21C20.5858 12.75 20.25 12.4142 20.25 12ZM18.1476 18.1476C18.4405 17.8547 18.9154 17.8547 19.2083 18.1476L19.6011 18.5405C19.894 18.8334 19.894 19.3082 19.6011 19.6011C19.3082 19.894 18.8334 19.894 18.5405 19.6011L18.1476 19.2083C17.8547 18.9154 17.8547 18.4405 18.1476 18.1476ZM5.85211 18.1479C6.145 18.4408 6.145 18.9157 5.85211 19.2086L5.45927 19.6014C5.16638 19.8943 4.6915 19.8943 4.39861 19.6014C4.10572 19.3085 4.10572 18.8336 4.39861 18.5407L4.79145 18.1479C5.08434 17.855 5.55921 17.855 5.85211 18.1479ZM12 20.25C12.4142 20.25 12.75 20.5858 12.75 21V22C12.75 22.4142 12.4142 22.75 12 22.75C11.5858 22.75 11.25 22.4142 11.25 22V21C11.25 20.5858 11.5858 20.25 12 20.25Z">
+            </path>
+        </svg>
+    </button>
+    <div id="menu-trigger" class="mobile-only">
+        <svg class="icon-menu" width="24" height="24" viewBox="0 0 1024 1024" fill="currentColor" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+                d="M187.392 70.656q28.672 0 48.64 19.456t19.968 48.128l0 52.224q0 28.672-19.968 48.64t-48.64 19.968l-54.272 0q-27.648 0-47.616-19.968t-19.968-48.64l0-52.224q0-28.672 19.968-48.128t47.616-19.456l54.272 0zM889.856 70.656q27.648 0 47.616 19.456t19.968 48.128l0 52.224q0 28.672-19.968 48.64t-47.616 19.968l-437.248 0q-28.672 0-48.64-19.968t-19.968-48.64l0-52.224q0-28.672 19.968-48.128t48.64-19.456l437.248 0zM187.392 389.12q28.672 0 48.64 19.968t19.968 48.64l0 52.224q0 27.648-19.968 47.616t-48.64 19.968l-54.272 0q-27.648 0-47.616-19.968t-19.968-47.616l0-52.224q0-28.672 19.968-48.64t47.616-19.968l54.272 0zM889.856 389.12q27.648 0 47.616 19.968t19.968 48.64l0 52.224q0 27.648-19.968 47.616t-47.616 19.968l-437.248 0q-28.672 0-48.64-19.968t-19.968-47.616l0-52.224q0-28.672 19.968-48.64t48.64-19.968l437.248 0zM187.392 708.608q28.672 0 48.64 19.968t19.968 47.616l0 52.224q0 28.672-19.968 48.64t-48.64 19.968l-54.272 0q-27.648 0-47.616-19.968t-19.968-48.64l0-52.224q0-27.648 19.968-47.616t47.616-19.968l54.272 0zM889.856 708.608q27.648 0 47.616 19.968t19.968 47.616l0 52.224q0 28.672-19.968 48.64t-47.616 19.968l-437.248 0q-28.672 0-48.64-19.968t-19.968-48.64l0-52.224q0-27.648 19.968-47.616t48.64-19.968l437.248 0z"
+                p-id="1697"></path>
+        </svg>
+        <svg class="icon-close" width="24" height="24" viewBox="0 0 1024 1024" fill="currentColor" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+                d="M632.117978 513.833356l361.805812 361.735298a85.462608 85.462608 0 1 1-121.001515 120.789974L511.116463 634.552816 146.913186 998.756094a86.026718 86.026718 0 0 1-121.706652-121.706652L389.480325 512.775651 27.674513 150.969839A85.392095 85.392095 0 0 1 148.393973 30.250379L510.199785 392.056191l366.671258-366.671258a86.026718 86.026718 0 0 1 121.706652 121.706652z"
+                p-id="4787"></path>
+        </svg>
+    </div>
+</header>
+
+<script>
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement; // 指向 <html> 标签
+
+    // 1. 初始化检查：检查本地存储或系统偏好
+    const savedTheme = localStorage.getItem('theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    // 应用初始主题
+    htmlElement.setAttribute('data-theme', savedTheme);
+
+    // 2. 绑定点击事件
+    themeToggleButton.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        // 设置 HTML 属性（触发 CSS 变量切换）
+        htmlElement.setAttribute('data-theme', targetTheme);
+
+        // 保存到本地存储
+        localStorage.setItem('theme', targetTheme);
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const trigger = document.getElementById('menu-trigger');
+        const menu = document.getElementById('mobile-menu');
+
+        if (trigger && menu) {
+            trigger.addEventListener('click', (e) => {
+                // 切换菜单列表的显示
+                menu.classList.toggle('active');
+                // 同时切换按钮本身的 active 类，用于控制图标切换
+                trigger.classList.toggle('active');
+
+                e.stopPropagation();
+            });
+
+            // 全局点击关闭（可选，提升体验）
+            document.addEventListener('click', () => {
+                menu.classList.remove('active');
+                trigger.classList.remove('active');
+            });
+        }
+    });
+</script>
