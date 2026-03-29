@@ -1,0 +1,45 @@
+# github workflows构建
+name: Deploy Hugo site to Pages  # 1. 给这个自动化任务起个名字，会显示在 GitHub 的 Actions 界面上。
+
+on:                              # 2. 定义“什么时候”执行这个任务。
+  push:                          # 3. 当有新的代码“推送（Push）”时触发。
+    branches: ["main"]           # 4. 只有推送的目标分支是 "main" 时才执行，防止你在测试分支乱搞时也发布。
+
+permissions:                     # 5. 设置这个脚本在 GitHub 内部拥有的“权力”。
+  contents: read                 # 6. 允许读取你的代码仓库内容（为了编译网站）。
+  pages: write                   # 7. 允许向 GitHub Pages 写入数据（为了发布网页）。
+  id-token: write                # 8. 允许生成身份令牌，确保部署过程的安全验证。
+
+jobs:
+  build:                         # 9. 定义第一个作业：构建（Build）。
+    runs-on: ubuntu-latest       # 10. 告诉 GitHub 分配一台最新的 Ubuntu 虚拟机来跑这段代码。
+    steps:                       # 11. 开始执行具体步骤：
+      - name: Checkout           # 12. 步骤：检出代码。
+        uses: actions/checkout@v4 # 13. 调用官方工具，把你的代码从仓库拉取到这台虚拟机里。
+        with:
+          submodules: recursive  # 14. 关键：同时拉取 themes 里的主题（子模块），否则网页会没样式。
+
+      - name: Setup Hugo         # 15. 步骤：安装 Hugo。
+        uses: peaceiris/actions-hugo@v3 # 16. 调用专门安装 Hugo 的插件。
+        with:
+          hugo-version: 'latest' # 17. 使用最新版本的 Hugo。
+          extended: true         # 18. 启用扩展版（支持 Sass 等高级 CSS 处理）。
+
+      - name: Build              # 19. 步骤：正式编译。
+        run: hugo --minify       # 20. 执行本地同样的 `hugo` 命令，生成 `public` 文件夹并压缩文件。
+
+      - name: Upload artifact    # 21. 步骤：上传产物。
+        uses: actions/upload-pages-artifact@v3 # 22. 把生成的 `public` 文件夹打包，临时存放在云端。
+        with:
+          path: ./public         # 23. 指定要打包哪个文件夹。
+
+  deploy:                        # 24. 定义第二个作业：部署（Deploy）。
+      environment:                 # 25. 设置环境配置。
+        name: github-pages         # 26. 指定发布到 GitHub 预设的网页环境。
+        url: ${{ steps.deployment.outputs.page_url }} # 27. 部署成功后，返回你网站的网址。
+      runs-on: ubuntu-latest       # 28. 同样在 Ubuntu 环境下运行。
+      needs: build                 # 29. 核心：必须等 build 作业成功完成后，才开始跑 deploy。
+      steps:
+        - name: Deploy to GitHub Pages # 30. 步骤：正式发布。
+          id: deployment           # 31. 给这一步起个 ID，方便第27行引用它的输出结果。
+          uses: actions/deploy-pages@v4 # 32. 调用官方工具，把上一步打包好的文件推送到 Web 服务器。
