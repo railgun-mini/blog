@@ -1,0 +1,17 @@
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }}</title>
+    {{ $cssFiles := slice
+    "css/home.css"
+    "css/list.css"
+    "css/single.css"
+    "css/markdown.css"
+    "css/style.css"
+    "css/components/header.css"
+    "css/components/footer.css"
+    }}
+    {{ range $cssFiles }}
+    {{ $css := resources.Get . | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $css.Permalink }}" integrity="{{ $css.Data.Integrity }}">
+    {{ end }}
+</head>

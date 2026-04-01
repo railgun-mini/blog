@@ -1,0 +1,39 @@
+ .list {
+     flex-grow: 1;
+     margin-left: 3em;
+     margin-right: 3em;
+ }
+
+ .list .list__title {
+     margin: 1em 0;
+ }
+
+ .list .list__cards {
+     display: flex;
+     flex-direction: column;
+     gap: 1em;
+ }
+
+ .list .list__card {
+     background-color: var(--card-bg-color);
+     padding: 1em;
+     border-radius: var(--radius-lg);
+ }
+
+ .list a {
+     display: flex;
+     flex-direction: column;
+     gap: 0.6em;
+ }
+
+ .list .list__selector {
+     display: flex;
+     justify-content: space-between;
+     margin-left: 1em;
+     margin-right: 1em;
+     margin-top: 1em;
+ }
+
+ .list .list__selector a:hover {
+     color: var(--text-hover-color);
+ }

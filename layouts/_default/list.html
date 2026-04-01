@@ -1,45 +1,4 @@
 {{ define "main" }}
-<style>
-    .list {
-        flex-grow: 1;
-        margin-left: 3rem;
-        margin-right: 3rem;
-    }
-
-    .list .list__title {
-        margin-bottom: 2rem;
-    }
-
-    .list .list__cards {
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-    }
-
-    .list .list__card {
-        background-color: var(--card-bg-color);
-        padding: 1rem;
-        border-radius: var(--radius-lg);
-    }
-
-    .list a {
-        display: flex;
-        flex-direction: column;
-        gap: 0.6em;
-    }
-
-    .list .list__selector {
-        display: flex;
-        justify-content: space-between;
-        margin-left: 1rem;
-        margin-right: 1rem;
-        margin-top: 1rem;
-    }
-
-    .list .list__selector a:hover {
-        color: var(--text-hover-color);
-    }
-</style>
 <main class="list">
     <h3 class="list__title">最新文章</h3>
     <div class="list__cards">

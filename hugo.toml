@@ -1,8 +1,8 @@
 baseURL = 'https://railgun-mini.github.io/blog/'
 locale = 'en-us'
 title = '我的博客'
-canonifyURLs = true
-relativeURLs = true
+# canonifyURLs = true
+# relativeURLs = true
 
 [[menus.main]]
 name = "首页"

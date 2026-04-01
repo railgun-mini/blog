@@ -1,41 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
-<head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .Title }}</title>
-    {{ $css1 := resources.Get "css/style.css" }}
-    {{ $css2 := resources.Get "css/markdown.css" }}
-    {{/* 将切片中的资源合并为一个名为 main.css 的文件 */}}
-    {{ $style := slice $css1 $css2 | resources.Concat "css/main.css" | minify | fingerprint }}
-    {{ $style = $style | minify | fingerprint }}
-    <link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}">
-</head>
+{{ partial "head.html" . }}
 <style>
-    .body {
-        min-width: 100%;
-        /* html默认 height: auto, 内容自己撑开 */
-        /* 如果heght:100%也就继承auto */
-        min-height: 100vh;
+    #root {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        gap: 2rem;
-    }
-
-    .body footer {
-        text-align: center;
-        padding-bottom: 1rem;
+        min-height: 100vh;
     }
 </style>
-
-<body class="body">
-    {{ partial "nav.html" . }}
-    {{ block "main" . }}{{ end }}
-    <footer>
-        <p>&copy; Railgun Blog</p>
-        <p>Published with Hugo</p>
-    </footer>
+<body>
+    <div id="root">
+        {{ partial "header.html" . }}
+        {{ block "main" . }}{{ end }}
+        {{ partial "footer.html" . }}
+    </div>
 </body>
 
 </html>

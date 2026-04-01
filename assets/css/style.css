@@ -11,6 +11,8 @@ html {
     box-sizing: inherit;
     margin: 0;
     padding: 0;
+    border: none;
+    outline: none;
 }
 
 body {
@@ -25,7 +27,7 @@ body {
     font-style: normal;
     font-weight: normal;
     src: local(""),
-        url("/fonts/nunito-v16-latin-regular.woff2") format("woff2");
+        url("../fonts/nunito-v16-latin-regular.woff2") format("woff2");
 }
 
 :root {
@@ -85,29 +87,11 @@ body {
 }
 
 /* 深色主题类名 */
-[data-theme="dark"] {
+:root.dark-theme {
     --bg-color: rgb(29, 30, 32);
     --card-bg-color: rgb(46, 46, 51);
     --text-color: rgb(218, 218, 219);
     --text-hover-color: rgb(97, 95, 255)
-}
-
-/* 当根元素带有 data-theme="dark" 时，隐藏月亮显示太阳 */
-[data-theme="dark"] #moon-icon {
-    display: none;
-}
-
-[data-theme="dark"] #sun-icon {
-    display: block;
-}
-
-/* 默认（浅色）情况下，隐藏太阳显示月亮 */
-:root:not([data-theme="dark"]) #sun-icon {
-    display: none;
-}
-
-:root:not([data-theme="dark"]) #moon-icon {
-    display: block;
 }
 
 .shadow-soft {
@@ -158,15 +142,10 @@ a {
     color: inherit;
     /* 通常也会顺便取消下划线 */
     text-decoration: none;
+    -webkit-user-drag: none;
 }
 
-button {
-    /* 去掉默认的背景 */
-    background: none;
-    /* 去掉默认的边框 */
-    border: none;
-    /* 去掉点击时的蓝色轮廓（可选，建议用自定义 focus 样式替代） */
-    outline: none;
-    /* 继承父元素的颜色 */
-    color: inherit;
+img {
+    user-select: none;
+    -webkit-user-drag: none;
 }
