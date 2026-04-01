@@ -1,4 +1,15 @@
 {{ define "main" }}
+<style>
+    .markdown-body {
+        margin-left: 2em;
+        margin-right: 2em;
+        max-width: 90vw;
+        padding: 2em;
+        color: var(--text-color);
+        background-color: var(--card-bg-color);
+        border-radius: var(--radius-lg);
+    }
+</style>
 <main class="content">
     <h1 style="text-align: center;">{{ .Title }}</h1>
     <div class="markdown-body shadow-soft">

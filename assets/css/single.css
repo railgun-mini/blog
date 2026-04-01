@@ -3,14 +3,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 1em;
 }
 
 .markdown-body {
-    margin-left: 2rem;
-    margin-right: 2rem;
+    margin-left: 2em;
+    margin-right: 2em;
     max-width: 90vw;
-    padding: 2rem;
+    padding: 2em;
     color: var(--text-color);
     background-color: var(--card-bg-color);
     border-radius: var(--radius-lg);
